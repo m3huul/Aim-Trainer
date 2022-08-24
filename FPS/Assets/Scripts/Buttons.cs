@@ -11,7 +11,7 @@ public class Buttons : MonoBehaviour
     
     public Slider sensSlider;
 
-    public UIelements ui;
+    
 
     public Toggle fullScreenToggle;
 
@@ -40,6 +40,7 @@ public class Buttons : MonoBehaviour
 
     private void Awake()
     {
+        
         //if (settings.crosshairtypeValue == 0)
         //{
         //    centerDotCrosshairImage.gameObject.SetActive(true);
@@ -58,7 +59,7 @@ public class Buttons : MonoBehaviour
         //}
 
         crosshairColor = settings.crosshairColor;
-        _crosshairColorValue = settings.crosshairColorValue;
+        //_crosshairColorValue = settings.crosshairColorValue;
 
         //if (_crosshairColorValue == 0)
         //{
@@ -78,6 +79,7 @@ public class Buttons : MonoBehaviour
         
         Screen.SetResolution(1920, 1080, true);
     }
+    
     private void Update()
     {
         crosshairTypeDropdown.value = settings.crosshairtypeValue;
@@ -114,7 +116,6 @@ public class Buttons : MonoBehaviour
     public void OnCrosshairChange(int c)
     {
         settings.crosshairtypeValue = c;
-        if(uiele)
         if (c == 0)
         {
             centerDotCrosshairImage.gameObject.SetActive(true);
@@ -132,6 +133,11 @@ public class Buttons : MonoBehaviour
             downCrosshair.gameObject.SetActive(true);
         }
 
+    }
+
+    public void OnCrosshairChangeInSettings(int c)
+    {
+        settings.crosshairtypeValue = c;
     }
 
 
@@ -259,7 +265,10 @@ public class Buttons : MonoBehaviour
 
     }
 
-
+    public void OnClickMainMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
     public void onClickPlayAgain()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

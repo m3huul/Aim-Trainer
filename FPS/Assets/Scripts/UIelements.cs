@@ -10,7 +10,7 @@ public class UIelements : MonoBehaviour
     public Image centerDotCrosshairImage, leftCrosshair, rightCrosshair, upCrosshair, downCrosshair;
     public TargetShooter targetShooter;
     public GameObject gameControl;
-    public GameObject ResultsPanel, pausedMenuPanel;
+    public GameObject ResultsPanel, pausedMenuPanel, settingsPanel;
     public float targetTime = 60f;
     bool gamePaused = false;
     bool startCounter;
@@ -38,11 +38,13 @@ public class UIelements : MonoBehaviour
             }
     
         }
-        if(Input.GetKeyDown(KeyCode.Escape) && gameControl.GetComponent<GameControl>().GetGameControlState()==GameControl.GameControlState.Gameplay)
+        if(Input.GetKeyDown(KeyCode.Escape) && gameControl.GetComponent<GameControl>().GetGameControlState()==GameControl.GameControlState.Gameplay &&
+            settingsPanel.activeInHierarchy==false )
         {
             
             if (gamePaused)
             {
+                TurnCrosshairOnAndOFF(true);
                 Cursor.lockState = CursorLockMode.Locked;
                 pausedMenuPanel.SetActive(false);
                 mouse.enabled = true;
@@ -51,12 +53,18 @@ public class UIelements : MonoBehaviour
             }
             else
             {
+                TurnCrosshairOnAndOFF(false);
                 Cursor.lockState = CursorLockMode.None;
                 pausedMenuPanel.SetActive(true);
                 startCounter = false;
                 mouse.enabled = false;
                 gamePaused = true;
             }
+        }
+        if (settingsPanel.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
+        {
+            settingsPanel.SetActive(false);
+            pausedMenuPanel.SetActive(true);
         }
     }
 
@@ -151,6 +159,7 @@ public class UIelements : MonoBehaviour
     //RESULTS PANEL OUTPUT FUNCTION//
     public void results()
     {
+        TurnCrosshairOnAndOFF(false);
         ResultsPanel.SetActive(true);
         shotsFiredText.text = mouse.shotsFired.ToString();
         targetHitsText.text = targetShooter.TargetHit.ToString();
@@ -169,6 +178,7 @@ public class UIelements : MonoBehaviour
     {
         if (gamePaused)
         {
+            TurnCrosshairOnAndOFF(true);
             Cursor.lockState = CursorLockMode.Locked;
             pausedMenuPanel.SetActive(false);
             mouse.enabled = true;

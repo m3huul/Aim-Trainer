@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: New Settings Script
   m_EditorClassIdentifier: 
   _MouseSens: 1.92
-  _crosshairColorValue: 0
+  _crosshairColorValue: 2
   _crosshairTypeValue: 1
-  _crosshairColor: {r: 1, g: 1, b: 1, a: 1}
+  _crosshairColor: {r: 0, g: 1, b: 0, a: 1}

@@ -2343,6 +2343,7 @@ MonoBehaviour:
   UI: {fileID: 0}
   sensInputField: {fileID: 404154561}
   sensSlider: {fileID: 2118957136}
+  ui: {fileID: 0}
   fullScreenToggle: {fileID: 2055343396}
   ResolutionDropdown: {fileID: 880708295}
   crosshairColorDropdown: {fileID: 1838635509}
@@ -2457,7 +2458,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 797025661}
         m_TargetAssemblyTypeName: Buttons, Assembly-CSharp
-        m_MethodName: OnCrosshairChange
+        m_MethodName: OnCrosshairChangeInSettings
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
