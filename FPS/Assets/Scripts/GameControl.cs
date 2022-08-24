@@ -7,39 +7,74 @@ public class GameControl : MonoBehaviour
 {
     public TargetShooter ShooterScipt;
 
-    public static int score, targetsHit;
+    public GameObject TargetSpawner, UiElements;
 
-    private float accuracy, shotsFired;
+    public MouseLook mouse;
 
-    public Text GetReadyText, scoreText, targetsHitText, shotsFiredText, accuracyText;
-
-    public GameObject resultsPanel;
-
-    private void Start()
-    {
-        GetReadyText.gameObject.SetActive(false);
-    }
-    private IEnumerator GetReady()
-    {
-        for(int i = 3; i >= 1; i--)
-        {
-            GetReadyText.text = "Get Ready!\n" + i.ToString();
-            yield return new WaitForSeconds(1f);
-        }
-        GetReadyText.text = "Go!";
-        yield return new WaitForSeconds(1f);
-
-        StartCoroutine("SpawnTargets");
-    }
-    void Update()
+    private void Awake()
     {
         
     }
-
-    public void StartGetReadyCoroutine()
+    public enum GameControlState
     {
-        resultsPanel.SetActive(false);
-        GetReadyText.gameObject.SetActive(true);
-        StartCoroutine("GetReady");
+        Starting,
+        Gameplay,
+        Ending,
+    }
+    GameControlState state;
+
+    void Start()
+    {
+        mouse.enabled = false;
+        state = GameControlState.Starting;
+        UpdateGameControlState();
+    }
+    void Update()
+    {
+
+    }
+
+    void UpdateGameControlState()
+    {
+        switch (state)
+        {
+            case GameControlState.Starting:
+                UiElements.GetComponent<UIelements>().StartGetReadyCoroutine();
+                break;
+
+            case GameControlState.Gameplay:              
+                mouse.enabled = true;
+                TargetSpawner.GetComponent<TargetSpawner>().SpawnTargets();
+                
+                UiElements.GetComponent<UIelements>().StartTimeCounter();
+                break;
+            case GameControlState.Ending:
+                mouse.enabled = false;
+                UiElements.GetComponent<UIelements>().results();
+                Cursor.lockState = CursorLockMode.None;
+                break;
+
+        }
+    }
+    public void SetGameControlState(GameControlState Gstate)
+    {
+        state = Gstate;
+        UpdateGameControlState();
+    }
+
+    public GameControlState GetGameControlState()
+    {
+        return state;
+    }
+
+    public void StartGamePlay()
+    {
+        state = GameControlState.Gameplay;
+        UpdateGameControlState();
+    }
+
+    public void ChangeToOpening()
+    {
+        SetGameControlState(GameControlState.Starting);
     }
 }

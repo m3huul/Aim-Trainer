@@ -4,23 +4,38 @@ using UnityEngine;
 
 public class TargetShooter : MonoBehaviour
 {
-    [SerializeField] Camera cam;
-    public int TargetHit;
+    [SerializeField] private Camera cam;
+    public int TargetHit=0;
+    public int multiplier=1;
+    public int score;
     void Update()
     {
+        Target target;
         if (Input.GetButtonDown("Fire1"))
         {
-            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+            
+            Ray ray = cam.ViewportPointToRay(new Vector3(.5f, .5f, 1000f));
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Target target = hit.collider.gameObject.GetComponent<Target>();
-
-                if (target != null)
+                target = hit.collider.gameObject.GetComponent<Target>();
+                
+                if (hit.collider.tag=="Enemy")
                 {
-                    TargetHit++;
+                    TargetHit=++TargetHit;
                     target.Hit();
+                    score = 100 * multiplier + score;
+                    multiplier = ++multiplier;    
+                }
+                else
+                {
+                    multiplier = 1;
                 }
             }
+            
         }
+        
     }
+
+
+
 }

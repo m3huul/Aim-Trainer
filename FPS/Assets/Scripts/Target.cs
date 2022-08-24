@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    
-    public void Hit()
+
+    public TargetSpawner spawner;
+    private void Start()
     {
-        transform.position = TargetBounds.Instance.GetRandomPosition();
+        spawner = TargetSpawner.FindObjectOfType<TargetSpawner>();
     }
-    private void Update()
-    {
-        
+    public void Hit()
+    {      
+        transform.position = spawner.RandomPosi();
     }
 }

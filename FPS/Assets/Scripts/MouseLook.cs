@@ -4,26 +4,43 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    public float mouseSensitivity;
 
-    public Transform playerBody;
+    [SerializeField] private Vector2 sens;
 
-    private float xRotationCamera = 0f;
+    private Vector2 rotation;
+
+    [SerializeField]
+    private SettingsScript settings;
+
+    
+    public int shotsFired=0;
     
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        
     }
 
-    void Update()
+    private Vector2 GetInput()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        Vector2 input = new Vector2(
+            Input.GetAxis("Mouse X"),
+            Input.GetAxis("Mouse Y"));
+        return input;
+    }
+    private void Update()
+    {
+        sens.x = settings.MouseSens;
+        sens.y = -settings.MouseSens;
+        Vector2 wantedVelocity = GetInput() * sens *500;
 
-        xRotationCamera -= mouseY;
-        xRotationCamera = Mathf.Clamp(xRotationCamera, -90f, 90f);
+        rotation += wantedVelocity * Time.deltaTime;
+        rotation.y = Mathf.Clamp(rotation.y, -90, 90);
+        transform.localEulerAngles = new Vector3(rotation.y, rotation.x,0f);
 
-        transform.localRotation = Quaternion.Euler(xRotationCamera, 0f, 0f);
-        playerBody.Rotate(Vector3.up * mouseX);
+        
+        if (Input.GetButtonDown("Fire1"))
+        {
+            shotsFired=++shotsFired;
+        }
     }
 }
