@@ -1,20 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class GameControl : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     public TargetShooter ShooterScipt;
-
-    public GameObject TargetSpawner, UiElements;
-
+    public GameObject TargetSpawn, uiElements;
     public MouseLook mouse;
 
-    private void Awake()
-    {
-        
-    }
     public enum GameControlState
     {
         Starting,
@@ -29,33 +22,29 @@ public class GameControl : MonoBehaviour
         state = GameControlState.Starting;
         UpdateGameControlState();
     }
-    void Update()
-    {
-
-    }
 
     void UpdateGameControlState()
     {
         switch (state)
         {
             case GameControlState.Starting:
-                UiElements.GetComponent<UIelements>().StartGetReadyCoroutine();
+                uiElements.GetComponent<ui>().StartGetReadyCoroutine();
                 break;
 
-            case GameControlState.Gameplay:              
+            case GameControlState.Gameplay:
                 mouse.enabled = true;
-                TargetSpawner.GetComponent<TargetSpawner>().SpawnTargets();
-                
-                UiElements.GetComponent<UIelements>().StartTimeCounter();
+                TargetSpawn.GetComponent<TargetSpawn>().SpawnTargets();
+                uiElements.GetComponent<ui>().StartTimeCounter();
                 break;
             case GameControlState.Ending:
                 mouse.enabled = false;
-                UiElements.GetComponent<UIelements>().results();
+                uiElements.GetComponent<ui>().results();
                 Cursor.lockState = CursorLockMode.None;
                 break;
 
         }
     }
+
     public void SetGameControlState(GameControlState Gstate)
     {
         state = Gstate;
@@ -71,10 +60,5 @@ public class GameControl : MonoBehaviour
     {
         state = GameControlState.Gameplay;
         UpdateGameControlState();
-    }
-
-    public void ChangeToOpening()
-    {
-        SetGameControlState(GameControlState.Starting);
     }
 }

@@ -13,10 +13,9 @@ public class TargetShooter : MonoBehaviour
         Target target;
         if (Input.GetButtonDown("Fire1"))
         {
-            
-            Ray ray = cam.ViewportPointToRay(new Vector3(.5f, .5f, 1000f));
+            Ray ray = cam.ViewportPointToRay(new Vector3(.5f, .5f, 10f));
             if (Physics.Raycast(ray, out RaycastHit hit))
-            {
+            { 
                 target = hit.collider.gameObject.GetComponent<Target>();
                 
                 if (hit.collider.tag=="Enemy")

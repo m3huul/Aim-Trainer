@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Buttons : MonoBehaviour
 {
-    public UIelements UI;
+    public ui UI;
 
     public InputField sensInputField;
     
@@ -145,7 +145,9 @@ public class Buttons : MonoBehaviour
 
     public void onSensChange(string v)
     {
-        settings.MouseSens = float.Parse(v);
+        float c;
+        float.TryParse(v, out c);
+        settings.MouseSens = c;
     }
 
     public void OnSensSliderChange(float v)
@@ -163,7 +165,6 @@ public class Buttons : MonoBehaviour
 
     public void onClickPlay()
     {
-        SceneManager.LoadScene(1);
         mainMenu.SetActive(false);
     }
 

@@ -13,5 +13,6 @@ public class Target : MonoBehaviour
     public void Hit()
     {      
         transform.position = spawner.RandomPosi();
+        
     }
 }
