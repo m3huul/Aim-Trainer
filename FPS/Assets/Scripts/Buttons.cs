@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class Buttons : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Buttons : MonoBehaviour
     
     public Slider sensSlider;
 
-    
+    //public GameObject Vid1, Vid2;
 
     public Toggle fullScreenToggle;
 
@@ -95,6 +96,8 @@ public class Buttons : MonoBehaviour
         sensSlider.value = settings.MouseSens;
         
     }
+
+    
 
     public void OnColorChange(int v)
     {
